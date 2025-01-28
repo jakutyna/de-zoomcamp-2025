@@ -1,4 +1,5 @@
 *.parquet
 *.csv
 .ipynb_checkpoints
+.DS_Store
 ny_taxi_postgres_data
