@@ -47,3 +47,16 @@ docker run -it \
     --user=root \
     --password=root \
     --host=pg-database
+
+
+## Terraform
+
+`terraform fmt` - format .tf configuration file
+
+`terraform init` - initialize bucket (install plugins and create required files)
+
+`terraform plan` - create a plan for the IAAC action (based on .tf config)
+
+`terraform apply` - runs the IAAC action described in a plan
+
+`terraform destroy` - runs the action to destroy the resources defined in .tf file
