@@ -1,0 +1,5 @@
+ipykernel # To run jupyter in VS Code
+pandas
+psycopg2-binary
+pyarrow
+sqlalchemy

@@ -1,6 +1,6 @@
 # Data
 **/ny_taxi_postgres_data/*
-**/data/*
+**/data*/*
 *.parquet
 *.csv
 **/homeworks/*
