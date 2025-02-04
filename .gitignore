@@ -4,6 +4,7 @@
 *.parquet
 *.csv
 **/homeworks/*
+data-engineering-zoomcamp
 
 # System files
 .ipynb_checkpoints
