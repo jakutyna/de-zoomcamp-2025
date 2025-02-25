@@ -1,0 +1,14 @@
+bq-dbt-workshop:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: de-zoomcamp-451821
+      dataset: trips_data_all
+      threads: 4
+      keyfile: "{{ env_var('GOOGLE_APPLICATION_CREDENTIALS') }}"
+      fixed_retries: 1
+      location: US
+      priority: interactive
+      timeout_seconds: 300

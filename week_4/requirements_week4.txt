@@ -1,0 +1,4 @@
+dbt-core
+dbt-bigquery
+pandas-gbq
+google-auth
