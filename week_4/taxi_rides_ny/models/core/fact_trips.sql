@@ -33,7 +33,15 @@ select trips_unioned.tripid,
     trips_unioned.dropoff_locationid,
     dropoff_zone.borough as dropoff_borough, 
     dropoff_zone.zone as dropoff_zone,  
-    trips_unioned.pickup_datetime, 
+    trips_unioned.pickup_datetime,
+    EXTRACT(YEAR FROM trips_unioned.pickup_datetime) year,
+    EXTRACT(MONTH FROM trips_unioned.pickup_datetime) month,
+    CASE
+        WHEN EXTRACT(MONTH FROM trips_unioned.pickup_datetime) BETWEEN 1 AND 3 THEN 'Q1'
+        WHEN EXTRACT(MONTH FROM trips_unioned.pickup_datetime) BETWEEN 4 AND 6 THEN 'Q2'
+        WHEN EXTRACT(MONTH FROM trips_unioned.pickup_datetime) BETWEEN 7 AND 9 THEN 'Q3'
+        ELSE 'Q4'
+        END quarter,
     trips_unioned.dropoff_datetime, 
     trips_unioned.store_and_fwd_flag, 
     trips_unioned.passenger_count, 
