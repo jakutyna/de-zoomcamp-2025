@@ -100,3 +100,97 @@ services:
      - "host.docker.internal:127.0.0.1" #// Linux
      - "host.docker.internal:host-gateway" #// Access services on the host machine from within the Docker container
 
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    depends_on:
+      - redpanda-1
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: redpanda-1:29092
+
+  # ####################
+  # # Redpanda Console #
+  # ####################
+  # console:
+  #   container_name: redpanda-console
+  #   image: docker.redpanda.com/redpandadata/console:v2.8.4
+  #   # networks:
+  #   #   - redpanda_network
+  #   entrypoint: /bin/sh
+  #   command: -c 'echo "$$CONSOLE_CONFIG_FILE" > /tmp/config.yml && echo "$$CONSOLE_ROLEBINDINGS_CONFIG_FILE" > /tmp/role-bindings.yml && /app/console'
+  #   volumes:
+  #     - ./config:/tmp/config/
+  #   environment:
+  #     CONFIG_FILEPATH: ${CONFIG_FILEPATH:-/tmp/config.yml}
+  #     CONSOLE_CONFIG_FILE: |
+  #       # Configure a connection to the Redpanda cluster
+  #       # See https://docs.redpanda.com/current/console/config/connect-to-redpanda/
+  #       kafka:
+  #         brokers: ["redpanda-1:9092"]
+  #         # schemaRegistry:
+  #         #   enabled: true
+  #         #   urls: ["http://redpanda-0:8081","http://redpanda-1:8081","http://redpanda-2:8081"]
+  #         # sasl:
+  #         #   enabled: true
+  #         #   username: superuser
+  #         #   password: secretpassword
+  #         #   mechanism: SCRAM-SHA-256
+  #       # redpanda:
+  #       #   adminApi:
+  #       #     enabled: true
+  #       #     urls: ["http://redpanda-0:9644","http://redpanda-1:9644","http://redpanda-2:9644"]
+  #       #     username: superuser
+  #       #     password: secretpassword
+  #       console:
+  #         # Configures Redpanda Console to fetch topic documentation from GitHub and display it in the UI.
+  #         # See https://docs.redpanda.com/current/console/config/topic-documentation/
+  #         topicDocumentation:
+  #           enabled: true
+  #           git:
+  #             enabled: true
+  #             repository:
+  #               url: https://github.com/redpanda-data/docs
+  #               branch: main
+  #               baseDirectory: tests/docker-compose
+  #       login:
+  #         enabled: true
+  #         jwtSecret: change-this-to-something-secret
+  #         useSecureCookies: false
+  #         # Enable plain login authentication (enterprise feature)
+  #         # See https://docs.redpanda.com/current/console/config/security/plain/
+  #         plain:
+  #           enabled: true
+  #           credentials:
+  #           - username: "jane"
+  #             password: "some-other-secret-password"
+  #           - username: "john"
+  #             password: "some-secret-password"
+  #       enterprise:
+  #         # Configures role-based access control to data and features in Redpanda Console.
+  #         # See https://docs.redpanda.com/current/console/config/security/authorization/
+  #         rbac:
+  #           enabled: true
+  #           roleBindingsFilepath: /tmp/role-bindings.yml
+  #     CONSOLE_ROLEBINDINGS_CONFIG_FILE: |
+  #       roleBindings:
+  #       - metadata:
+  #           name: Platform Ops
+  #         subjects:
+  #           - kind: user
+  #             provider: Plain
+  #             name: jane
+  #         roleName: admin
+  #       - metadata:
+  #           name: Software Engineers
+  #         subjects:
+  #           - kind: user
+  #             provider: Plain
+  #             name: john
+  #         roleName: editor
+  #   ports:
+  #     - 8080:8080
+  #   # depends_on:
+  #   #   redpanda-1:
+  #   #     condition: service_healthy
